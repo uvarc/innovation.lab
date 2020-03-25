@@ -17,16 +17,14 @@ before_install:
 
 install:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    cd ./
     docker build --no-cache -t uvarc/innovation-lab:latest . || exit 1;
     docker push uvarc/innovation-lab:latest || exit 1;
-    aws sqs send-message --queue-url 'https://queue.amazonaws.com/474683445819/dcos-refresh' --message-body "vanhorn/innobation-lab" || exit 1;
+    aws sqs send-message --queue-url "https://queue.amazonaws.com/474683445819/dcos-refresh" --message-body "vanhorn/innobation-lab" || exit 1;
     fi
   - if [ "$TRAVIS_BRANCH" == "dev" ]; then
-    cd ./
     docker build --no-cache -t uvarc/innovation-lab:dev . || exit 1;
     docker push uvarc/innovation-lab:dev || exit 1;
-    aws sqs send-message --queue-url 'https://queue.amazonaws.com/474683445819/dcos-refresh' --message-body "vanhorn/innobation-lab-dev" || exit 1;
+    aws sqs send-message --queue-url "https://queue.amazonaws.com/474683445819/dcos-refresh" --message-body "vanhorn/innobation-lab-dev" || exit 1;
     fi
 
 notifications:
