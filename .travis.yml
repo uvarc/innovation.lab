@@ -1,3 +1,8 @@
+branches:
+  only:
+  - master
+  - dev
+
 language: bash
 
 services:
@@ -13,12 +18,12 @@ install:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker build --no-cache -t uvarc/innovation.lab:latest . || exit 1;
     docker push uvarc/innovation.lab:latest || exit 1;
-    # aws sqs send-message --queue-url 'https://queue.amazonaws.com/474683445819/dcos-refresh' --message-body 'vanhorn/innovation-lab' || exit 1;
+    # aws sqs send-message --queue-url "https://queue.amazonaws.com/474683445819/dcos-refresh" --message-body "vanhorn/innovation-lab" || exit 1;
     fi
   - if [ "$TRAVIS_BRANCH" == "dev" ]; then
     docker build --no-cache -t uvarc/innovation.lab:dev . || exit 1;
     docker push uvarc/innovation.lab:dev || exit 1;
-    aws sqs send-message --queue-url 'https://queue.amazonaws.com/474683445819/dcos-refresh' --message-body 'vanhorn/innovation-lab-dev' || exit 1;
+    # aws sqs send-message --queue-url "https://queue.amazonaws.com/474683445819/dcos-refresh" --message-body "vanhorn/innovation-lab-dev" || exit 1;
     fi
 
 notifications:
